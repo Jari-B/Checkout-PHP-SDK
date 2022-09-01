@@ -5,6 +5,7 @@ namespace PayPalCheckoutSdk\Core;
 use PayPalHttp\HttpRequest;
 use PayPalHttp\Injector;
 use PayPalHttp\HttpClient;
+use Illuminate\Support\Facades\Cache;
 
 class AuthorizationInjector implements Injector
 {
@@ -24,9 +25,13 @@ class AuthorizationInjector implements Injector
     {
         if (!$this->hasAuthHeader($request) && !$this->isAuthRequest($request))
         {
+            $cacheKey = md5('paypal_access_token');
+            $this->accessToken = Cache::get($cacheKey);
+
             if (is_null($this->accessToken) || $this->accessToken->isExpired())
             {
                 $this->accessToken = $this->fetchAccessToken();
+                Cache::put($cacheKey, $this->accessToken, $this->expiresIn);
             }
             $request->headers['Authorization'] = 'Bearer ' . $this->accessToken->token;
         }
