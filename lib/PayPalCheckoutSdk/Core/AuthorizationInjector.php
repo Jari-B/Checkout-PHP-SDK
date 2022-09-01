@@ -31,7 +31,7 @@ class AuthorizationInjector implements Injector
             if (is_null($this->accessToken) || $this->accessToken->isExpired())
             {
                 $this->accessToken = $this->fetchAccessToken();
-                Cache::put($cacheKey, $this->accessToken, $this->expiresIn);
+                Cache::put($cacheKey, $this->accessToken, $this->accessToken->expiresIn);
             }
             $request->headers['Authorization'] = 'Bearer ' . $this->accessToken->token;
         }
