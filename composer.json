@@ -1,5 +1,5 @@
 {
-    "name": "paypal/paypal-checkout-sdk",
+    "name": "jari-b/paypal/paypal-checkout-sdk",
     "description": "PayPal's PHP SDK for Checkout REST APIs",
     "keywords": ["paypal", "payments", "rest", "sdk", "orders", "checkout"],
     "type": "library",
